@@ -1,0 +1,320 @@
+.approvalContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.titleArea {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.headerIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  background-color: var(--primary-light);
+  color: var(--primary-color);
+  border-radius: var(--radius-md);
+  border: 1px solid rgba(59, 130, 246, 0.15);
+}
+
+.header h1 {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  color: var(--text-primary);
+  letter-spacing: -0.02em;
+}
+
+.header p {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+}
+
+.tabsRow {
+  display: flex;
+  gap: 16px;
+  border-bottom: 1.5px solid var(--border-color);
+  margin-top: 4px;
+}
+
+.tabBtn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 6px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  border-bottom: 2.5px solid transparent;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  margin-bottom: -1.5px;
+}
+
+.tabBtn:hover {
+  color: var(--text-primary);
+}
+
+.activeTab {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
+.tabCount {
+  font-size: 11px;
+  font-weight: 700;
+  background-color: var(--bg-tertiary);
+  color: var(--text-secondary);
+  padding: 2px 8px;
+  border-radius: 9999px;
+}
+
+.activeTab .tabCount {
+  background-color: var(--primary-light);
+  color: var(--primary-color);
+}
+
+.errorAlert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--danger-light);
+  color: var(--danger-color);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid rgba(239, 68, 68, 0.15);
+}
+
+.successAlert {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background-color: var(--success-light);
+  color: var(--success-color);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 4px;
+  font-size: 13px;
+  font-weight: 600;
+  border: 1px solid rgba(16, 185, 129, 0.15);
+}
+
+.tableWrapper {
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.approvalTable {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+}
+
+.approvalTable th {
+  background-color: var(--bg-tertiary);
+  padding: 16px 20px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1.5px solid var(--border-color);
+}
+
+.approvalTable td {
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 14px;
+  color: var(--text-secondary);
+  vertical-align: middle;
+}
+
+.approvalTable tr:last-child td {
+  border-bottom: none;
+}
+
+.approvalTable tr:hover td {
+  background-color: rgba(248, 250, 252, 0.6);
+}
+
+.requestId {
+  font-family: monospace;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--secondary-color);
+  background-color: var(--secondary-light);
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(79, 70, 229, 0.1);
+}
+
+.studentName {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.itemName {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.quantity {
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 800;
+  padding: 4px 10px;
+  border-radius: 9999px;
+  letter-spacing: 0.025em;
+  border: 1px solid transparent;
+}
+
+.badgePending {
+  background-color: var(--warning-light);
+  color: var(--warning-color);
+  border-color: rgba(245, 158, 11, 0.15);
+}
+
+.badgeApproved {
+  background-color: var(--primary-light);
+  color: var(--primary-color);
+  border-color: rgba(59, 130, 246, 0.15);
+}
+
+.badgeRejected {
+  background-color: var(--danger-light);
+  color: var(--danger-color);
+  border-color: rgba(239, 68, 68, 0.15);
+}
+
+.badgeFulfilled {
+  background-color: var(--success-light);
+  color: var(--success-color);
+  border-color: rgba(16, 185, 129, 0.15);
+}
+
+.actionsGroup {
+  display: flex;
+  gap: 8px;
+  justify-content: flex-end;
+}
+
+.approveBtn,
+.rejectBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid transparent;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+}
+
+.approveBtn {
+  color: var(--success-color);
+  background-color: var(--success-light);
+  border-color: rgba(16, 185, 129, 0.1);
+}
+
+.approveBtn:hover {
+  background-color: var(--success-color);
+  color: #ffffff;
+}
+
+.rejectBtn {
+  color: var(--danger-color);
+  background-color: var(--danger-light);
+  border-color: rgba(239, 68, 68, 0.1);
+}
+
+.rejectBtn:hover {
+  background-color: var(--danger-color);
+  color: #ffffff;
+}
+
+.loaderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 0;
+  gap: 16px;
+  color: var(--text-secondary);
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3.5px solid var(--border-color);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+  color: var(--text-muted);
+  background-color: var(--bg-secondary);
+  border-radius: var(--radius-md);
+  border: 1.5px dashed var(--border-color);
+}
+
+.emptyState h3 {
+  color: var(--text-primary);
+  font-size: 16px;
+  font-weight: 700;
+  margin: 12px 0 4px;
+}
+
+.emptyState p {
+  font-size: 14px;
+}
+
+.textCenter {
+  text-align: center;
+}
+
+.textRight {
+  text-align: right;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
