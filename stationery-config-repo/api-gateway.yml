@@ -1,0 +1,27 @@
+# API Gateway Specific Configurations
+server:
+  port: 8080
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+          lower-case-service-id: true
+      # Commented route configurations for future service integration
+      # routes:
+      #   - id: auth-service
+      #     uri: lb://auth-service
+      #     predicates:
+      #       - Path=/api/v1/auth/**
+      #
+      #   - id: inventory-service
+      #     uri: lb://inventory-service
+      #     predicates:
+      #       - Path=/api/v1/inventory/**
+      #
+      #   - id: request-service
+      #     uri: lb://request-service
+      #     predicates:
+      #       - Path=/api/v1/requests/**

@@ -1,0 +1,13 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+  config:
+    # Modern Spring Boot 3.x configuration import from Config Server
+    # Resolves to CONFIG_SERVER_URL environment variable, defaulting to localhost:8888
+    import: "optional:configserver:${CONFIG_SERVER_URL:http://localhost:8888}"
+  cloud:
+    config:
+      fail-fast: false

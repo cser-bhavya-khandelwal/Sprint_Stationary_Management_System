@@ -1,0 +1,24 @@
+server:
+  port: 8888
+
+spring:
+  application:
+    name: config-server
+  profiles:
+    active: native
+  cloud:
+    config:
+      server:
+        native:
+          # Reads configurations from stationery-config-repo
+          # Resolves to parent directory relative path locally, or path specified by CONFIG_REPO_PATH in docker
+          search-locations: file:${CONFIG_REPO_PATH:../stationery-config-repo}
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env
+  endpoint:
+    health:
+      show-details: always

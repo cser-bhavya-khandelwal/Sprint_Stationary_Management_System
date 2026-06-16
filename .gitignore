@@ -19,10 +19,11 @@ web_modules/
 .eslintcache
 .stylelintcache
 
-# Output directories of bundlers (Vite build outputs)
+# Output directories of bundlers (Vite build outputs) and Maven builds
 dist/
 dist-ssr/
 build/
+target/
 
 # Editor / IDE settings
 .vscode/*
