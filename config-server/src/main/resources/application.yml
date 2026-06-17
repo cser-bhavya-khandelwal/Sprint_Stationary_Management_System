@@ -10,8 +10,6 @@ spring:
     config:
       server:
         native:
-          # Reads configurations from stationery-config-repo
-          # Resolves to parent directory relative path locally, or path specified by CONFIG_REPO_PATH in docker
           search-locations: file:${CONFIG_REPO_PATH:../stationery-config-repo}
 
 management:
@@ -22,3 +20,13 @@ management:
   endpoint:
     health:
       show-details: always
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+    register-with-eureka: true
+    fetch-registry: true
+
+  instance:
+    hostname: localhost
