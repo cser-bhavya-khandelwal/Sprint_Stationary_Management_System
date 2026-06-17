@@ -1,41 +1,44 @@
 package com.stationery.auth.dto;
 
-import com.stationery.auth.model.Role;
+import com.stationery.auth.enums.Role;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotNull;
 
+/**
+ * DTO representing user registration request.
+ */
 public class RegisterRequest {
 
-    @NotBlank(message = "Full name is required")
-    private String fullName;
+    @NotBlank(message = "Name is required")
+    private String name;
 
     @NotBlank(message = "Email is required")
     @Email(message = "Invalid email format")
     private String email;
 
     @NotBlank(message = "Password is required")
-    @Size(min = 6, message = "Password must be at least 6 characters")
     private String password;
 
+    @NotNull(message = "Role is required")
     private Role role;
 
     public RegisterRequest() {
     }
 
-    public RegisterRequest(String fullName, String email, String password, Role role) {
-        this.fullName = fullName;
+    public RegisterRequest(String name, String email, String password, Role role) {
+        this.name = name;
         this.email = email;
         this.password = password;
         this.role = role;
     }
 
-    public String getFullName() {
-        return fullName;
+    public String getName() {
+        return name;
     }
 
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
