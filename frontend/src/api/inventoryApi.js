@@ -1,102 +1,117 @@
-// Dummy Inventory API managing static/session inventory data.
-// Operations are stored in localStorage to provide a fully reactive mock UI experience.
+const BASE_URL = "http://localhost:8080/api/inventory";
 
-const INITIAL_INVENTORY = [
-  {
-    id: "inv-1",
-    name: "Classic Blue Ballpoint Pens",
-    category: "Writing Instruments",
-    unit: "Box (50 pcs)",
-    availableQuantity: 120,
-    minimumQuantity: 20
-  },
-  {
-    id: "inv-2",
-    name: "A4 Grid Notebooks",
-    category: "Paper Products",
-    unit: "Pack (10 pcs)",
-    availableQuantity: 45,
-    minimumQuantity: 15
-  },
-  {
-    id: "inv-3",
-    name: "Stainless Steel Stapler",
-    category: "Office Supplies",
-    unit: "Piece",
-    availableQuantity: 14,
-    minimumQuantity: 5
-  },
-  {
-    id: "inv-4",
-    name: "Fluorescent Highlighter Set",
-    category: "Writing Instruments",
-    unit: "Set (6 colors)",
-    availableQuantity: 38,
-    minimumQuantity: 10
-  },
-  {
-    id: "inv-5",
-    name: "Self-Stick Notes 3x3",
-    category: "Paper Products",
-    unit: "Pack (12 pads)",
-    availableQuantity: 75,
-    minimumQuantity: 15
-  },
-  {
-    id: "inv-6",
-    name: "Heavy Duty Hole Puncher",
-    category: "Office Supplies",
-    unit: "Piece",
-    availableQuantity: 8,
-    minimumQuantity: 3
-  }
-];
-
-const getStoredInventory = () => {
-  const data = localStorage.getItem("inventory");
-  if (!data) {
-    localStorage.setItem("inventory", JSON.stringify(INITIAL_INVENTORY));
-    return INITIAL_INVENTORY;
-  }
-  return JSON.parse(data);
+const getAuthHeaders = () => {
+  const token = localStorage.getItem("token");
+  return token ? { "Authorization": `Bearer ${token}` } : {};
 };
+
+const mapToFrontend = (item) => ({
+  id: item.id,
+  name: item.name,
+  category: item.category,
+  unit: item.description || "Piece",
+  availableQuantity: item.quantity,
+  minimumQuantity: item.minQuantityThreshold
+});
 
 export const inventoryApi = {
   getItems: async () => {
-    await new Promise((resolve) => setTimeout(resolve, 150));
-    return getStoredInventory();
+    try {
+      const response = await fetch(BASE_URL, {
+        headers: getAuthHeaders()
+      });
+      if (!response.ok) throw new Error("Failed to fetch inventory items");
+      const items = await response.json();
+      return items.map(mapToFrontend);
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
   },
 
   addItem: async (item) => {
-    await new Promise((resolve) => setTimeout(resolve, 150));
-    const items = getStoredInventory();
-    const newItem = {
-      id: `inv-${Date.now()}`,
-      name: item.name,
-      category: item.category,
-      unit: item.unit,
-      availableQuantity: parseInt(item.availableQuantity) || 0,
-      minimumQuantity: parseInt(item.minimumQuantity) || 0
-    };
-    items.push(newItem);
-    localStorage.setItem("inventory", JSON.stringify(items));
-    return { success: true, item: newItem };
+    try {
+      const payload = {
+        itemCode: `ITEM-${Math.floor(1000 + Math.random() * 9000)}`,
+        name: item.name,
+        description: item.unit || "Piece",
+        quantity: parseInt(item.availableQuantity) || 0,
+        minQuantityThreshold: parseInt(item.minimumQuantity) || 0,
+        price: 1.0,
+        category: item.category
+      };
+
+      const response = await fetch(BASE_URL, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          ...getAuthHeaders()
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) throw new Error("Failed to add inventory item");
+      const savedItem = await response.json();
+      return { success: true, item: mapToFrontend(savedItem) };
+    } catch (error) {
+      return { success: false, error: error.message };
+    }
   },
 
   updateItem: async (id, updatedFields) => {
-    await new Promise((resolve) => setTimeout(resolve, 150));
-    const items = getStoredInventory();
-    const idx = items.findIndex((item) => item.id === id);
-    if (idx !== -1) {
-      items[idx] = {
-        ...items[idx],
-        ...updatedFields,
-        availableQuantity: parseInt(updatedFields.availableQuantity) ?? items[idx].availableQuantity,
-        minimumQuantity: parseInt(updatedFields.minimumQuantity) ?? items[idx].minimumQuantity
+    try {
+      const payload = {
+        itemCode: updatedFields.itemCode || `ITEM-${Math.floor(1000 + Math.random() * 9000)}`,
+        name: updatedFields.name,
+        description: updatedFields.unit || "Piece",
+        quantity: parseInt(updatedFields.availableQuantity) || 0,
+        minQuantityThreshold: parseInt(updatedFields.minimumQuantity) || 0,
+        price: parseFloat(updatedFields.price) || 1.0,
+        category: updatedFields.category
       };
-      localStorage.setItem("inventory", JSON.stringify(items));
-      return { success: true, item: items[idx] };
+
+      const response = await fetch(`${BASE_URL}/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          ...getAuthHeaders()
+        },
+        body: JSON.stringify(payload)
+      });
+
+      if (!response.ok) throw new Error("Failed to update inventory item");
+      const updated = await response.json();
+      return { success: true, item: mapToFrontend(updated) };
+    } catch (error) {
+      return { success: false, error: error.message };
     }
-    return { success: false, error: "Item not found" };
+  },
+
+  searchInventory: async (query) => {
+    try {
+      const response = await fetch(`${BASE_URL}/search?query=${encodeURIComponent(query)}`, {
+        headers: getAuthHeaders()
+      });
+      if (!response.ok) throw new Error("Search failed");
+      const items = await response.json();
+      return items.map(mapToFrontend);
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
+  },
+
+  getLowStockItems: async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/low-stock`, {
+        headers: getAuthHeaders()
+      });
+      if (!response.ok) throw new Error("Failed to fetch low stock items");
+      const items = await response.json();
+      return items.map(mapToFrontend);
+    } catch (error) {
+      console.error(error);
+      return [];
+    }
   }
 };

@@ -68,15 +68,18 @@ public class AuthServiceImpl implements AuthService {
                     )
             );
         } catch (AuthenticationException e) {
-            return new AuthenticationResponse(null, "Invalid email or password", false);
+            return new AuthenticationResponse(null, "Invalid email or password", false, null, null, null);
         }
 
         // Fetch user details to generate token
         return userRepository.findByEmail(request.getEmail())
                 .map(user -> {
-                    String jwtToken = jwtService.generateToken(user);
-                    return new AuthenticationResponse(jwtToken, "Login successful", true);
+                    java.util.Map<String, Object> extraClaims = new java.util.HashMap<>();
+                    extraClaims.put("role", user.getRole().name());
+                    extraClaims.put("name", user.getName());
+                    String jwtToken = jwtService.generateToken(extraClaims, user);
+                    return new AuthenticationResponse(jwtToken, "Login successful", true, user.getName(), user.getEmail(), user.getRole().name());
                 })
-                .orElse(new AuthenticationResponse(null, "Invalid email or password", false));
+                .orElse(new AuthenticationResponse(null, "Invalid email or password", false, null, null, null));
     }
 }

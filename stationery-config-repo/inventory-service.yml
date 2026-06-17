@@ -1,12 +1,14 @@
 # Configuration for future Inventory Service
 server:
-  port: 8082
+  port: 8083
 
 spring:
+  application:
+    name: inventory-service
   datasource:
     url: jdbc:mysql://${MYSQL_HOST:localhost}:${MYSQL_PORT:3306}/${MYSQL_INVENTORY_DB:db_stationery_inventory}?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
     username: ${MYSQL_USERNAME:root}
-    password: ${MYSQL_PASSWORD:root}
+    password: bhavya@123
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:

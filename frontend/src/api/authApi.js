@@ -1,52 +1,40 @@
- // Dummy Auth API simulating authorization responses
-// State is persisted in localStorage for standard UI state management without a backend
-
-const DEFAULT_USERS = [
-  {
-    id: "usr-1",
-    fullName: "Professor Minerva",
-    email: "admin@university.edu",
-    role: "ADMIN"
-  },
-  {
-    id: "usr-2",
-    fullName: "Harry Potter",
-    email: "student@university.edu",
-    role: "STUDENT"
-  }
-];
+const BASE_URL = "http://localhost:8080/api/auth";
 
 export const authApi = {
   login: async (email, password) => {
-    // Artificial delay to mimic API latency
-    await new Promise((resolve) => setTimeout(resolve, 300));
+    try {
+      const response = await fetch(`${BASE_URL}/login`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-    const user = DEFAULT_USERS.find(
-      (u) => u.email.toLowerCase() === email.toLowerCase()
-    );
+      const data = await response.json();
 
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-      return { success: true, user };
+      if (response.ok && data.success && data.token) {
+        // Store JWT token
+        localStorage.setItem("token", data.token);
+        
+        // Store user details for frontend compatibility
+        const user = {
+          fullName: data.name,
+          email: data.email,
+          role: data.role
+        };
+        localStorage.setItem("user", JSON.stringify(user));
+        return { success: true, user };
+      } else {
+        return { success: false, error: data.message || "Invalid email or password" };
+      }
+    } catch (err) {
+      return { success: false, error: "Unable to connect to the authentication service." };
     }
-
-    // Default fallback - dynamic mock login if not matching default ones
-    const isStudent = email.includes("student");
-    const mockUser = {
-      id: `usr-${Math.random().toString(36).substr(2, 9)}`,
-      fullName: isStudent ? "Mock Student" : "Mock Admin",
-      email,
-      role: isStudent ? "STUDENT" : "ADMIN"
-    };
-    
-    localStorage.setItem("user", JSON.stringify(mockUser));
-    return { success: true, user: mockUser };
   },
 
-  register: async (fullName, email, password, confirmPassword) => {
-    await new Promise((resolve) => setTimeout(resolve, 300));
-    
-    if (!fullName || !email || !password || !confirmPassword) {
+  register: async (fullName, email, password, confirmPassword, role) => {
+    if (!fullName || !email || !password || !confirmPassword || !role) {
       return { success: false, error: "All fields are required." };
     }
     
@@ -54,15 +42,30 @@ export const authApi = {
       return { success: false, error: "Passwords do not match." };
     }
 
-    // Successfully register user and create dynamic student account
-    const mockUser = {
-      id: `usr-${Math.random().toString(36).substr(2, 9)}`,
-      fullName,
-      email,
-      role: "STUDENT" // Registers as student by default
-    };
+    try {
+      const response = await fetch(`${BASE_URL}/register`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: fullName,
+          email,
+          password,
+          role: role
+        }),
+      });
 
-    return { success: true, user: mockUser };
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        return { success: true, message: data.message };
+      } else {
+        return { success: false, error: data.message || "Registration failed." };
+      }
+    } catch (err) {
+      return { success: false, error: "Unable to connect to the authentication service." };
+    }
   },
 
   getCurrentUser: () => {
@@ -72,6 +75,7 @@ export const authApi = {
 
   logout: () => {
     localStorage.removeItem("user");
+    localStorage.removeItem("token");
     return { success: true };
   }
 };

@@ -7,6 +7,7 @@ import { GraduationCap, User, Mail, Lock, ArrowRight, AlertCircle, CheckCircle }
 export default function RegisterPage() {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
+  const [role, setRole] = useState("STUDENT");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState("");
@@ -19,7 +20,7 @@ export default function RegisterPage() {
     setError("");
     setSuccess("");
 
-    if (!fullName || !email || !password || !confirmPassword) {
+    if (!fullName || !email || !password || !confirmPassword || !role) {
       setError("Please fill in all fields.");
       return;
     }
@@ -31,7 +32,7 @@ export default function RegisterPage() {
 
     setLoading(true);
     try {
-      const result = await authApi.register(fullName, email, password, confirmPassword);
+      const result = await authApi.register(fullName, email, password, confirmPassword, role);
       if (result.success) {
         setSuccess("Registration successful! Redirecting to login...");
         setTimeout(() => {
@@ -100,6 +101,23 @@ export default function RegisterPage() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
+            </div>
+          </div>
+
+          <div className={styles.inputGroup}>
+            <label htmlFor="role">Register As</label>
+            <div className={styles.inputWrapper}>
+              <User className={styles.inputIcon} size={18} />
+              <select
+                id="role"
+                value={role}
+                onChange={(e) => setRole(e.target.value)}
+                required
+                className={styles.selectInput}
+              >
+                <option value="STUDENT">STUDENT</option>
+                <option value="ADMIN">ADMIN</option>
+              </select>
             </div>
           </div>
 
