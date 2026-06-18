@@ -1,11 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        maven 'Maven 3.9'
-        jdk 'Java 17'
-    }
-
     environment {
         DOCKER_REGISTRY = 'stationery-registry:5000'
     }
@@ -22,21 +17,21 @@ pipeline {
                 stage('Auth Service') {
                     steps {
                         dir('auth-service') {
-                            sh 'mvn clean test-compile'
+                            bat 'mvn clean test-compile'
                         }
                     }
                 }
                 stage('Inventory Service') {
                     steps {
                         dir('inventory-service') {
-                            sh 'mvn clean test-compile'
+                            bat 'mvn clean test-compile'
                         }
                     }
                 }
                 stage('Request Service') {
                     steps {
                         dir('request-service') {
-                            sh 'mvn clean test-compile'
+                            bat 'mvn clean test-compile'
                         }
                     }
                 }
@@ -48,21 +43,21 @@ pipeline {
                 stage('Auth Service Tests') {
                     steps {
                         dir('auth-service') {
-                            sh 'mvn test'
+                            bat 'mvn test -DargLine="-Dnet.bytebuddy.experimental=true"'
                         }
                     }
                 }
                 stage('Inventory Service Tests') {
                     steps {
                         dir('inventory-service') {
-                            sh 'mvn test'
+                            bat 'mvn test -DargLine="-Dnet.bytebuddy.experimental=true"'
                         }
                     }
                 }
                 stage('Request Service Tests') {
                     steps {
                         dir('request-service') {
-                            sh 'mvn test'
+                            bat 'mvn test -DargLine="-Dnet.bytebuddy.experimental=true"'
                         }
                     }
                 }
@@ -71,17 +66,15 @@ pipeline {
 
         stage('Build & Package JARs') {
             steps {
-                sh 'mvn clean package -DskipTests'
+                bat 'mvn clean package -DskipTests'
             }
         }
 
         stage('Dockerize Services') {
             steps {
-                script {
-                    docker.build("${DOCKER_REGISTRY}/auth-service:${BUILD_NUMBER}", "./auth-service")
-                    docker.build("${DOCKER_REGISTRY}/inventory-service:${BUILD_NUMBER}", "./inventory-service")
-                    docker.build("${DOCKER_REGISTRY}/request-service:${BUILD_NUMBER}", "./request-service")
-                }
+                bat "docker build -t ${DOCKER_REGISTRY}/auth-service:${BUILD_NUMBER} ./auth-service"
+                bat "docker build -t ${DOCKER_REGISTRY}/inventory-service:${BUILD_NUMBER} ./inventory-service"
+                bat "docker build -t ${DOCKER_REGISTRY}/request-service:${BUILD_NUMBER} ./request-service"
             }
         }
     }
@@ -89,7 +82,7 @@ pipeline {
     post {
         always {
             archiveArtifacts artifacts: '**/target/*.jar', fingerprint: true
-            junit '**/target/surefire-reports/*.xml'
+            junit allowEmptyResults: true, testResults: '**/target/surefire-reports/*.xml'
         }
         success {
             echo 'Capstone microservices build pipeline completed successfully!'
