@@ -24,7 +24,7 @@ export default function RequestSubmissionPage({ user }) {
         const data = await inventoryApi.getItems();
         setCatalogItems(data);
         if (data.length > 0) {
-          setSelectedItemId(data[0].id);
+         setSelectedItemId(String(data[0].id));
         }
       } catch (err) {
         console.error("Failed to load catalog.", err);
@@ -43,7 +43,9 @@ export default function RequestSubmissionPage({ user }) {
       return;
     }
 
-    const item = catalogItems.find((i) => i.id === selectedItemId);
+    const item = catalogItems.find(
+  (i) => i.id === parseInt(selectedItemId)
+);
     if (!item) {
       setError("Invalid item selected.");
       return;
@@ -55,7 +57,9 @@ export default function RequestSubmissionPage({ user }) {
     }
 
     // Check if item already exists in the basket
-    const existsIdx = requestBasket.findIndex((bi) => bi.id === selectedItemId);
+    const existsIdx = requestBasket.findIndex(
+  (bi) => bi.id === parseInt(selectedItemId)
+);
     if (existsIdx !== -1) {
       // Update quantity
       const updated = [...requestBasket];
@@ -68,10 +72,9 @@ export default function RequestSubmissionPage({ user }) {
         {
           id: item.id,
           name: item.name,
-          category: item.category,
-          unit: item.unit,
+          category: item.category || "General",
           quantity: parseInt(quantity)
-        }
+          }
       ]);
     }
 
@@ -157,8 +160,8 @@ export default function RequestSubmissionPage({ user }) {
               >
                 {catalogItems.map((item) => (
                   <option key={item.id} value={item.id}>
-                    {item.name} ({item.unit}) - Stock: {item.availableQuantity}
-                  </option>
+                  {item.name} - Stock: {item.quantity}
+                </option>
                 ))}
               </select>
             </div>
@@ -209,9 +212,8 @@ export default function RequestSubmissionPage({ user }) {
                       <tr key={index}>
                         <td>
                           <div className={styles.basketItemName}>
-                            <span>{item.name}</span>
-                            <span className={styles.unitDetail}>({item.unit})</span>
-                          </div>
+                          <span>{item.name}</span>
+                        </div>
                         </td>
                         <td>{item.category}</td>
                         <td className={styles.textCenter}>

@@ -49,7 +49,7 @@ services:
       dockerfile: Dockerfile
     container_name: api-gateway
     ports:
-      - "8080:8080"
+      - "8090:8090"
     environment:
       - CONFIG_SERVER_URL=http://config-server:8888
       - EUREKA_SERVER_URL=http://eureka-server:8761/eureka/
@@ -71,6 +71,45 @@ services:
     environment:
       - CONFIG_SERVER_URL=http://config-server:8888
       - EUREKA_SERVER_URL=http://eureka-server:8761/eureka/
+      - MYSQL_HOST=host.docker.internal
+    depends_on:
+      config-server:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - stationery-network
+
+  inventory-service:
+    build:
+      context: ./inventory-service
+      dockerfile: Dockerfile
+    container_name: inventory-service
+    ports:
+      - "8083:8083"
+    environment:
+      - CONFIG_SERVER_URL=http://config-server:8888
+      - EUREKA_SERVER_URL=http://eureka-server:8761/eureka/
+      - MYSQL_HOST=host.docker.internal
+    depends_on:
+      config-server:
+        condition: service_healthy
+      eureka-server:
+        condition: service_healthy
+    networks:
+      - stationery-network
+
+  request-service:
+    build:
+      context: ./request-service
+      dockerfile: Dockerfile
+    container_name: request-service
+    ports:
+      - "8084:8084"
+    environment:
+      - CONFIG_SERVER_URL=http://config-server:8888
+      - EUREKA_SERVER_URL=http://eureka-server:8761/eureka/
+      - MYSQL_HOST=host.docker.internal
     depends_on:
       config-server:
         condition: service_healthy

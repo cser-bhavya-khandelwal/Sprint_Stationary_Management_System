@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8080/api/inventory";
+const BASE_URL = "http://localhost:8090/api/inventory";
 
 const getAuthHeaders = () => {
   const token = localStorage.getItem("token");

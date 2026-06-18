@@ -100,7 +100,7 @@ export default function MyRequestsPage({ user }) {
             </thead>
             <tbody>
               {requests.map((req) => (
-                <tr key={req.id}>
+                <tr key={req.keyId || req.id}>
                   <td>
                     <span className={styles.requestId}>{req.id}</span>
                   </td>

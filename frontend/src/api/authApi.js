@@ -1,4 +1,4 @@
-const BASE_URL = "http://localhost:8080/api/auth";
+const BASE_URL = "http://localhost:8090/api/auth";
 
 export const authApi = {
   login: async (email, password) => {

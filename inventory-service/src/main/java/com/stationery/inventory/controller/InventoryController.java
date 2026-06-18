@@ -79,9 +79,9 @@ public class InventoryController {
     }
 
     /**
-     * PATCH /api/inventory/{id}/stock : Adjust stock quantity.
+     * PUT /api/inventory/{id}/stock : Adjust stock quantity.
      */
-    @PatchMapping("/{id}/stock")
+    @PutMapping("/{id}/stock")
     public ResponseEntity<InventoryResponse> updateStock(@PathVariable Long id, @Valid @RequestBody StockUpdateRequest request) {
         InventoryResponse response = inventoryService.updateStock(id, request);
         return ResponseEntity.ok(response);

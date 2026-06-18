@@ -26,6 +26,3 @@ management:
     register-with-eureka: true
     fetch-registry: true
 
-spring:
-  application:
-    name: config-server
