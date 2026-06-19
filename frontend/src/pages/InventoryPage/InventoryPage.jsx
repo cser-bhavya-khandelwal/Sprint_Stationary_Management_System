@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { inventoryApi } from "../../api/inventoryApi";
 import styles from "./InventoryPage.module.css";
-import { Package, Plus, Edit3, Save, X, Search, AlertCircle, Eye, Info } from "lucide-react";
+import { Package, Plus, Edit3, Save, X, Search, AlertCircle, Eye, AlertTriangle } from "lucide-react";
 
 export default function InventoryPage() {
   const [items, setItems] = useState([]);

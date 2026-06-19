@@ -93,7 +93,7 @@ export default function MyRequestsPage({ user }) {
               <tr>
                 <th>Request ID</th>
                 <th>Stationery Item</th>
-                <th>Request Date</th>
+                <th>Submitted At</th>
                 <th className={styles.textCenter}>Quantity</th>
                 <th>Status</th>
               </tr>
@@ -108,7 +108,7 @@ export default function MyRequestsPage({ user }) {
                     <span className={styles.itemName}>{req.itemName}</span>
                   </td>
                   <td>
-                    <span className={styles.requestDate}>{req.date}</span>
+                    <span className={styles.requestDate}>{req.submittedAt}</span>
                   </td>
                   <td className={styles.textCenter}>
                     <span className={styles.quantity}>{req.quantity}</span>

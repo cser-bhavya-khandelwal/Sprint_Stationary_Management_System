@@ -20,8 +20,8 @@ export default function Navbar({ user, onLogout }) {
           <GraduationCap size={24} />
         </div>
         <div className={styles.logoText}>
-          <span className={styles.brand}>Hogwarts Academy</span>
-          <span className={styles.subBrand}>Stationery Portal</span>
+          <span className={styles.brand}>Stationery Management System</span>
+          <span className={styles.subBrand}></span>
         </div>
       </div>
 

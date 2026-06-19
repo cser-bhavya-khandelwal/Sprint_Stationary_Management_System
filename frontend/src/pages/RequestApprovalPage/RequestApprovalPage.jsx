@@ -155,6 +155,7 @@ export default function RequestApprovalPage() {
                 <th>Student Name</th>
                 <th>Stationery Item</th>
                 <th className={styles.textCenter}>Quantity</th>
+                <th>Submitted At</th>
                 <th>Status</th>
                 {activeTab === "PENDING" && <th className={styles.textRight}>Actions</th>}
               </tr>
@@ -173,6 +174,9 @@ export default function RequestApprovalPage() {
                   </td>
                   <td className={styles.textCenter}>
                     <span className={styles.quantity}>{req.quantity}</span>
+                  </td>
+                  <td>
+                    <span>{req.submittedAt}</span>
                   </td>
                   <td>{getStatusBadge(req.status)}</td>
                   {activeTab === "PENDING" && (

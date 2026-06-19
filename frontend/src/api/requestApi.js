@@ -5,11 +5,39 @@ const getAuthHeaders = () => {
   return token ? { "Authorization": `Bearer ${token}` } : {};
 };
 
+const formatTimestamp = (isoString) => {
+  if (!isoString) return "";
+  const parts = isoString.split("T");
+  if (parts.length < 2) return isoString;
+  
+  const dateParts = parts[0].split("-");
+  if (dateParts.length < 3) return isoString;
+  const year = dateParts[0];
+  const monthNum = parseInt(dateParts[1], 10) - 1;
+  const day = parseInt(dateParts[2], 10);
+  
+  const timeParts = parts[1].split(":");
+  if (timeParts.length < 2) return isoString;
+  let hours = parseInt(timeParts[0], 10);
+  const minutes = timeParts[1].substring(0, 2); // get only mm from mm:ss
+  
+  const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const month = months[monthNum] || "Jun";
+  
+  const ampm = hours >= 12 ? "PM" : "AM";
+  hours = hours % 12;
+  hours = hours ? hours : 12;
+  const formattedHours = String(hours).padStart(2, "0");
+  
+  return `${day} ${month} ${year}, ${formattedHours}:${minutes} ${ampm}`;
+};
+
 const mapToFrontend = (backendRequests) => {
   if (!backendRequests) return [];
   const list = Array.isArray(backendRequests) ? backendRequests : [backendRequests];
   const flattened = [];
   list.forEach(req => {
+    const formattedSubmittedAt = formatTimestamp(req.createdAt);
     if (req.items && req.items.length > 0) {
       req.items.forEach(item => {
         flattened.push({
@@ -19,7 +47,8 @@ const mapToFrontend = (backendRequests) => {
           itemName: item.itemName,
           quantity: item.quantity,
           status: req.status,
-          date: req.createdAt ? req.createdAt.split("T")[0] : new Date().toISOString().split("T")[0]
+          date: req.createdAt ? req.createdAt.split("T")[0] : new Date().toISOString().split("T")[0],
+          submittedAt: formattedSubmittedAt
         });
       });
     } else {
@@ -30,7 +59,8 @@ const mapToFrontend = (backendRequests) => {
         itemName: "No Items",
         quantity: 0,
         status: req.status,
-        date: req.createdAt ? req.createdAt.split("T")[0] : new Date().toISOString().split("T")[0]
+        date: req.createdAt ? req.createdAt.split("T")[0] : new Date().toISOString().split("T")[0],
+        submittedAt: formattedSubmittedAt
       });
     }
   });

@@ -29,13 +29,8 @@
 }
 
 .brand {
-  font-size: 0px !important; /* Hide original brand text "Hogwarts Academy" */
-}
-
-.brand::after {
-  content: "Stationery Management System" !important;
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 15px !important;
+  font-size: 15px;
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: -0.01em;
@@ -43,7 +38,7 @@
 }
 
 .subBrand {
-  display: none !important; /* Hide "Stationery Portal" */
+  display: none !important;
 }
 
 .userSection {
