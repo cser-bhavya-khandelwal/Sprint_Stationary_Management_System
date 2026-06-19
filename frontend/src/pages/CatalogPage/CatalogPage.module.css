@@ -14,25 +14,17 @@
 .titleArea {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 0px;
 }
 
 .headerIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  background-color: var(--primary-light);
-  color: var(--primary-color);
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(59, 130, 246, 0.15);
+  display: none !important; /* Hide decorative header page icon */
 }
 
 .header h1 {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 22px;
-  font-weight: 800;
+  font-size: 20px;
+  font-weight: 700;
   color: var(--text-primary);
   letter-spacing: -0.02em;
 }
@@ -51,10 +43,14 @@
   font-weight: 600;
   color: var(--text-secondary);
   background-color: var(--bg-secondary);
-  border: 1.5px solid var(--border-color);
-  padding: 8px 16px;
+  border: 1px solid var(--border-color);
+  padding: 8px 14px;
   border-radius: var(--radius-sm);
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast);
+}
+
+.refreshBtn svg {
+  display: none !important; /* Hide refresh loop icon */
 }
 
 .refreshBtn:hover {
@@ -63,16 +59,7 @@
 }
 
 .spinning {
-  animation: spin 0.8s linear infinite;
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+  /* Disabled spin animation */
 }
 
 .filterBar {
@@ -88,49 +75,42 @@
 }
 
 .searchIcon {
-  position: absolute;
-  left: 14px;
-  color: var(--text-muted);
-  pointer-events: none;
+  display: none !important; /* Hide search input icon */
 }
 
 .searchBox input {
   width: 100%;
-  padding: 11px 16px 11px 42px;
+  padding: 10px 12px;
   border-radius: var(--radius-sm);
-  border: 1.5px solid var(--border-color);
+  border: 1px solid var(--border-color);
   font-size: 14px;
   font-weight: 500;
   background-color: var(--bg-secondary);
   color: var(--text-primary);
-  transition: all var(--transition-fast);
+  transition: border-color var(--transition-fast);
 }
 
 .searchBox input:focus {
   border-color: var(--primary-color);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
 }
 
 .filterBox {
   position: relative;
   display: flex;
   align-items: center;
-  width: 200px;
+  width: 180px;
 }
 
 .filterIcon {
-  position: absolute;
-  left: 14px;
-  color: var(--text-muted);
-  pointer-events: none;
+  display: none !important; /* Hide filter select box icon */
 }
 
 .filterBox select {
   width: 100%;
-  padding: 11px 36px 11px 42px;
+  padding: 10px 36px 10px 12px;
   border-radius: var(--radius-sm);
-  border: 1.5px solid var(--border-color);
+  border: 1px solid var(--border-color);
   font-size: 14px;
   font-weight: 600;
   color: var(--text-secondary);
@@ -141,7 +121,7 @@
   background-repeat: no-repeat;
   background-position: right 12px center;
   background-size: 16px;
-  transition: all var(--transition-fast);
+  transition: border-color var(--transition-fast);
 }
 
 .filterBox select:focus {
@@ -151,7 +131,7 @@
 
 .tableWrapper {
   background-color: var(--bg-secondary);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
   overflow: hidden;
@@ -165,19 +145,19 @@
 
 .catalogTable th {
   background-color: var(--bg-tertiary);
-  padding: 16px 20px;
-  font-size: 12px;
+  padding: 12px 16px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-bottom: 1.5px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .catalogTable td {
-  padding: 16px 20px;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--border-color);
-  font-size: 14px;
+  font-size: 13.5px;
   color: var(--text-secondary);
   vertical-align: middle;
 }
@@ -187,7 +167,7 @@
 }
 
 .catalogTable tr:hover td {
-  background-color: rgba(248, 250, 252, 0.6);
+  background-color: var(--bg-primary);
   color: var(--text-primary);
 }
 
@@ -203,24 +183,25 @@
 }
 
 .lowStockBadge {
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 700;
   color: var(--danger-color);
   background-color: var(--danger-light);
-  border: 1px solid rgba(239, 68, 68, 0.15);
-  padding: 1px 8px;
+  border: 1px solid var(--border-color);
+  padding: 1px 6px;
   border-radius: 9999px;
   text-transform: uppercase;
 }
 
 .categoryBadge {
   display: inline-block;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--text-secondary);
   background-color: var(--bg-tertiary);
-  padding: 4px 10px;
+  padding: 2px 8px;
   border-radius: 9999px;
+  border: 1px solid var(--border-color);
 }
 
 .textRight {
@@ -228,11 +209,11 @@
 }
 
 .stockCell {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .stockValue {
-  padding: 4px 10px;
+  padding: 2px 8px;
   border-radius: var(--radius-sm);
   font-variant-numeric: tabular-nums;
 }
@@ -252,15 +233,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px 0;
-  gap: 16px;
+  padding: 48px 0;
+  gap: 12px;
   color: var(--text-secondary);
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
-  border: 3.5px solid var(--border-color);
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border-color);
   border-top-color: var(--primary-color);
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -271,23 +252,23 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 80px 20px;
+  padding: 60px 20px;
   text-align: center;
   color: var(--text-muted);
   background-color: var(--bg-secondary);
-  border-radius: var(--radius-md);
-  border: 1.5px dashed var(--border-color);
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--border-color);
 }
 
 .emptyState h3 {
   color: var(--text-primary);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   margin: 12px 0 4px;
 }
 
 .emptyState p {
-  font-size: 14px;
+  font-size: 13px;
 }
 
 @media (max-width: 768px) {

@@ -2,10 +2,10 @@
   width: var(--sidebar-width);
   background-color: var(--bg-secondary);
   border-right: 1px solid var(--border-color);
-  padding: 24px 16px;
+  padding: 20px 12px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
+  gap: 24px;
   height: calc(100vh - var(--navbar-height));
   position: sticky;
   top: var(--navbar-height);
@@ -16,22 +16,14 @@
 .roleCard {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 14px;
-  background-color: var(--bg-tertiary);
-  border-radius: var(--radius-md);
+  padding: 12px;
+  background-color: var(--bg-primary);
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
 }
 
 .roleIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--primary-color);
-  background-color: var(--bg-secondary);
-  padding: 8px;
-  border-radius: var(--radius-sm);
-  box-shadow: var(--shadow-sm);
+  display: none !important; /* Hide decorative portal icon in sidebar */
 }
 
 .roleDetails {
@@ -41,9 +33,9 @@
 
 .roleTitle {
   font-size: 11px;
-  font-weight: 800;
+  font-weight: 700;
   color: var(--text-primary);
-  letter-spacing: 0.07em;
+  letter-spacing: 0.05em;
 }
 
 .roleSub {
@@ -56,32 +48,31 @@
 .navMenu {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
 }
 
 .navItem {
   display: flex;
   align-items: center;
   gap: 12px;
-  padding: 12px 14px;
+  padding: 10px 12px;
   border-radius: var(--radius-sm);
   color: var(--text-secondary);
   font-weight: 600;
-  font-size: 14px;
-  transition: all var(--transition-fast);
+  font-size: 13.5px;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
 }
 
 .navItem:hover {
   background-color: var(--bg-tertiary);
   color: var(--text-primary);
-  transform: translateX(2px);
 }
 
 .activeItem {
   background-color: var(--primary-light);
   color: var(--primary-color);
   border-left: 3px solid var(--primary-color);
-  padding-left: 11px; /* Offset border width */
+  padding-left: 9px; /* Offset border width */
 }
 
 .iconWrapper {
@@ -111,12 +102,12 @@
 
 @media (max-width: 768px) {
   .sidebar {
-    width: 72px;
-    padding: 20px 8px;
+    width: 64px;
+    padding: 16px 8px;
     align-items: center;
   }
   .roleCard {
-    padding: 8px;
+    padding: 6px;
     justify-content: center;
   }
   .roleDetails {
@@ -127,14 +118,14 @@
   }
   .navItem {
     justify-content: center;
-    padding: 12px;
+    padding: 10px;
   }
   .activeItem {
     border-left: none;
     border-radius: var(--radius-sm);
     background-color: var(--primary-light);
     color: var(--primary-color);
-    padding-left: 12px;
+    padding-left: 10px;
   }
   .footer {
     display: none;

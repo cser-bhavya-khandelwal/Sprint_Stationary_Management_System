@@ -14,25 +14,17 @@
 .titleArea {
   display: flex;
   align-items: center;
-  gap: 14px;
+  gap: 0px;
 }
 
 .headerIcon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 44px;
-  height: 44px;
-  background-color: var(--primary-light);
-  color: var(--primary-color);
-  border-radius: var(--radius-md);
-  border: 1px solid rgba(59, 130, 246, 0.15);
+  display: none !important; /* Hide decorative page header icon */
 }
 
 .header h1 {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 22px;
-  font-weight: 800;
+  font-size: 20px;
+  font-weight: 700;
   color: var(--text-primary);
   letter-spacing: -0.02em;
 }
@@ -46,15 +38,19 @@
 .addBtn {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   background-color: var(--primary-color);
   color: #ffffff;
-  font-weight: 700;
-  font-size: 14px;
-  padding: 10px 18px;
+  font-weight: 600;
+  font-size: 13.5px;
+  padding: 8px 16px;
   border-radius: var(--radius-sm);
   border: 1px solid var(--primary-hover);
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast);
+}
+
+.addBtn svg {
+  display: none !important; /* Hide decorative Add plus icon in button */
 }
 
 .addBtn:hover {
@@ -63,48 +59,46 @@
 
 .formCard {
   background-color: var(--bg-secondary);
-  border: 1.5px solid var(--border-color);
-  border-radius: var(--radius-lg);
-  padding: 28px;
-  box-shadow: var(--shadow-md);
-  animation: slideDown 0.3s ease-out;
-}
-
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 24px;
+  box-shadow: var(--shadow-sm);
 }
 
 .formHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1.5px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
   padding-bottom: 12px;
   margin-bottom: 20px;
 }
 
 .formHeader h2 {
   font-family: 'Plus Jakarta Sans', sans-serif;
-  font-size: 16px;
-  font-weight: 800;
+  font-size: 15px;
+  font-weight: 700;
   color: var(--text-primary);
 }
 
 .closeBtn {
   color: var(--text-secondary);
-  padding: 6px;
+  padding: 4px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.closeBtn svg {
+  display: none !important; /* Hide decorative X icon in close button */
+}
+
+.closeBtn::before {
+  content: "Close";
+  font-size: 12px;
+  font-weight: 600;
 }
 
 .closeBtn:hover {
@@ -118,12 +112,16 @@
   gap: 8px;
   background-color: var(--danger-light);
   color: var(--danger-color);
-  padding: 12px 16px;
+  padding: 10px 14px;
   border-radius: var(--radius-sm);
   margin-bottom: 20px;
   font-size: 13px;
   font-weight: 600;
-  border: 1px solid rgba(239, 68, 68, 0.15);
+  border: 1px solid var(--border-color);
+}
+
+.errorAlert svg {
+  display: none !important; /* Hide decorative warning icon */
 }
 
 .successAlert {
@@ -132,24 +130,28 @@
   gap: 8px;
   background-color: var(--success-light);
   color: var(--success-color);
-  padding: 12px 16px;
+  padding: 10px 14px;
   border-radius: var(--radius-sm);
   margin-bottom: 20px;
   font-size: 13px;
   font-weight: 600;
-  border: 1px solid rgba(16, 185, 129, 0.15);
+  border: 1px solid var(--border-color);
+}
+
+.successAlert svg {
+  display: none !important; /* Hide decorative success check icon */
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .formGrid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
+  gap: 16px;
 }
 
 .inputGroup {
@@ -167,14 +169,14 @@
 .inputGroup input,
 .inputGroup select {
   width: 100%;
-  padding: 11px 16px;
+  padding: 10px 12px;
   border-radius: var(--radius-sm);
-  border: 1.5px solid var(--border-color);
-  font-size: 14px;
+  border: 1px solid var(--border-color);
+  font-size: 13.5px;
   font-weight: 500;
   background-color: var(--bg-primary);
   color: var(--text-primary);
-  transition: all var(--transition-fast);
+  transition: border-color var(--transition-fast);
 }
 
 .inputGroup input:focus,
@@ -188,19 +190,19 @@
   display: flex;
   justify-content: flex-end;
   gap: 12px;
-  border-top: 1.5px solid var(--border-color);
-  padding-top: 20px;
+  border-top: 1px solid var(--border-color);
+  padding-top: 16px;
 }
 
 .cancelBtn {
-  padding: 10px 18px;
+  padding: 8px 16px;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 13.5px;
   color: var(--text-secondary);
   background-color: var(--bg-tertiary);
-  border: 1.5px solid var(--border-color);
+  border: 1px solid var(--border-color);
   border-radius: var(--radius-sm);
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast);
 }
 
 .cancelBtn:hover {
@@ -212,14 +214,18 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 18px;
-  font-weight: 700;
-  font-size: 14px;
+  padding: 8px 16px;
+  font-weight: 600;
+  font-size: 13.5px;
   color: #ffffff;
   background-color: var(--primary-color);
   border: 1px solid var(--primary-hover);
   border-radius: var(--radius-sm);
-  transition: all var(--transition-fast);
+  transition: background-color var(--transition-fast);
+}
+
+.saveBtn svg {
+  display: none !important; /* Hide decorative save icon */
 }
 
 .saveBtn:hover {
@@ -233,33 +239,29 @@
 }
 
 .searchIcon {
-  position: absolute;
-  left: 14px;
-  color: var(--text-muted);
-  pointer-events: none;
+  display: none !important; /* Hide search input icon */
 }
 
 .searchBar input {
   width: 100%;
-  padding: 11px 16px 11px 42px;
+  padding: 10px 12px;
   border-radius: var(--radius-sm);
-  border: 1.5px solid var(--border-color);
+  border: 1px solid var(--border-color);
   font-size: 14px;
   font-weight: 500;
   background-color: var(--bg-secondary);
   color: var(--text-primary);
-  transition: all var(--transition-fast);
+  transition: border-color var(--transition-fast);
 }
 
 .searchBar input:focus {
   border-color: var(--primary-color);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.08);
 }
 
 .tableWrapper {
   background-color: var(--bg-secondary);
-  border-radius: var(--radius-md);
+  border-radius: var(--radius-sm);
   border: 1px solid var(--border-color);
   box-shadow: var(--shadow-sm);
   overflow: hidden;
@@ -273,19 +275,19 @@
 
 .inventoryTable th {
   background-color: var(--bg-tertiary);
-  padding: 16px 20px;
-  font-size: 12px;
+  padding: 12px 16px;
+  font-size: 11px;
   font-weight: 700;
   color: var(--text-secondary);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-bottom: 1.5px solid var(--border-color);
+  border-bottom: 1px solid var(--border-color);
 }
 
 .inventoryTable td {
-  padding: 16px 20px;
+  padding: 12px 16px;
   border-bottom: 1px solid var(--border-color);
-  font-size: 14px;
+  font-size: 13.5px;
   color: var(--text-secondary);
   vertical-align: middle;
 }
@@ -295,7 +297,7 @@
 }
 
 .inventoryTable tr:hover td {
-  background-color: rgba(248, 250, 252, 0.6);
+  background-color: var(--bg-primary);
 }
 
 .itemNameWrapper {
@@ -310,23 +312,24 @@
 
 .itemId {
   font-family: monospace;
-  font-size: 11px;
+  font-size: 10.5px;
   color: var(--text-muted);
   margin-top: 1px;
 }
 
 .categoryBadge {
   display: inline-block;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 600;
   color: var(--text-secondary);
   background-color: var(--bg-tertiary);
-  padding: 4px 10px;
+  padding: 2px 8px;
   border-radius: 9999px;
+  border: 1px solid var(--border-color);
 }
 
 .boldText {
-  font-weight: 700;
+  font-weight: 600;
 }
 
 .mutedText {
@@ -344,38 +347,47 @@
 .statusLabel {
   display: inline-flex;
   align-items: center;
-  gap: 4px;
-  font-size: 11px;
-  font-weight: 800;
-  padding: 4px 10px;
+  gap: 0px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
   border-radius: 9999px;
   text-transform: uppercase;
+}
+
+.statusLabel svg {
+  display: none !important; /* Hide Lucide warning icon in low stock status label */
 }
 
 .statusLow {
   background-color: var(--danger-light);
   color: var(--danger-color);
-  border: 1px solid rgba(239, 68, 68, 0.15);
+  border: 1px solid var(--border-color);
 }
 
 .statusOk {
   background-color: var(--success-light);
   color: var(--success-color);
-  border: 1px solid rgba(16, 185, 129, 0.15);
+  border: 1px solid var(--border-color);
 }
 
 .editRowBtn {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 13px;
-  font-weight: 700;
+  font-size: 12.5px;
+  font-weight: 600;
   color: var(--primary-color);
   background-color: var(--primary-light);
-  padding: 6px 12px;
+  padding: 4px 10px;
   border-radius: var(--radius-sm);
-  border: 1px solid rgba(59, 130, 246, 0.1);
-  transition: all var(--transition-fast);
+  border: 1px solid var(--border-color);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.editRowBtn svg {
+  /* Kept: Edit is allowed essential icon */
+  margin-right: 2px;
 }
 
 .editRowBtn:hover {
@@ -388,15 +400,15 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 60px 0;
-  gap: 16px;
+  padding: 48px 0;
+  gap: 12px;
   color: var(--text-secondary);
 }
 
 .spinner {
-  width: 40px;
-  height: 40px;
-  border: 3.5px solid var(--border-color);
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--border-color);
   border-top-color: var(--primary-color);
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -407,23 +419,27 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 80px 20px;
+  padding: 60px 20px;
   text-align: center;
   color: var(--text-muted);
   background-color: var(--bg-secondary);
-  border-radius: var(--radius-md);
-  border: 1.5px dashed var(--border-color);
+  border-radius: var(--radius-sm);
+  border: 1px dashed var(--border-color);
+}
+
+.emptyState svg {
+  display: none !important; /* Hide empty state icon */
 }
 
 .emptyState h3 {
   color: var(--text-primary);
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   margin: 12px 0 4px;
 }
 
 .emptyState p {
-  font-size: 14px;
+  font-size: 13px;
 }
 
 .textRight {
